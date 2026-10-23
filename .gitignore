@@ -218,3 +218,16 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# --- SnackStack ---
+# Secrets: never commit real keys. Only the template is tracked.
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Local audio from the voice smoke tests
+*.wav
+
+# Course material (not ours to republish)
+resources/Multimodal Conversational System_Assignment.md

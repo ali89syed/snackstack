@@ -1,0 +1,90 @@
+[
+  {
+    "id": "M001",
+    "name": "Margherita Pizza",
+    "category": "Pizza",
+    "cuisine": "Italian",
+    "price": 299,
+    "rating": 4.7,
+    "dietary_tags": ["vegetarian"],
+    "description": "Classic thin crust with tomato, mozzarella, basil",
+    "available": true
+  },
+  {
+    "id": "M002",
+    "name": "Vegan Pasta Primavera",
+    "category": "Pasta",
+    "cuisine": "Italian",
+    "price": 349,
+    "rating": 4.5,
+    "dietary_tags": ["vegan", "vegetarian"],
+    "description": "Penne with seasonal vegetables, olive oil, garlic",
+    "available": true
+  },
+  {
+    "id": "M003",
+    "name": "Butter Chicken",
+    "category": "Main Course",
+    "cuisine": "Indian",
+    "price": 379,
+    "rating": 4.9,
+    "dietary_tags": ["gluten-free"],
+    "description": "Creamy tomato curry with tender chicken and naan",
+    "available": true
+  },
+  {
+    "id": "M004",
+    "name": "Vegan Buddha Bowl",
+    "category": "Bowl",
+    "cuisine": "Fusion",
+    "price": 319,
+    "rating": 4.6,
+    "dietary_tags": ["vegan", "vegetarian", "gluten-free"],
+    "description": "Quinoa, chickpeas, avocado, greens, tahini",
+    "available": true
+  },
+  {
+    "id": "M005",
+    "name": "Classic Cheeseburger",
+    "category": "Burger",
+    "cuisine": "American",
+    "price": 259,
+    "rating": 4.4,
+    "dietary_tags": [],
+    "description": "Beef patty, cheddar, lettuce, tomato, brioche bun",
+    "available": true
+  },
+  {
+    "id": "M006",
+    "name": "Paneer Tikka",
+    "category": "Starter",
+    "cuisine": "Indian",
+    "price": 199,
+    "rating": 4.8,
+    "dietary_tags": ["vegetarian", "gluten-free"],
+    "description": "Tandoor-grilled cottage cheese with peppers",
+    "available": true
+  },
+  {
+    "id": "M007",
+    "name": "Aglio e Olio",
+    "category": "Pasta",
+    "cuisine": "Italian",
+    "price": 279,
+    "rating": 4.5,
+    "dietary_tags": ["vegan", "vegetarian"],
+    "description": "Spaghetti with garlic, chilli, olive oil, parsley",
+    "available": true
+  },
+  {
+    "id": "M008",
+    "name": "Mango Lassi",
+    "category": "Beverage",
+    "cuisine": "Indian",
+    "price": 99,
+    "rating": 4.7,
+    "dietary_tags": ["vegetarian", "gluten-free"],
+    "description": "Blended yogurt with Alphonso mango, cardamom",
+    "available": true
+  }
+]
