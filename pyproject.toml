@@ -4,7 +4,7 @@ version = "0.1.0"
 description = "Multi-agent food delivery assistant built with LangGraph"
 readme = "README.md"
 authors = [
-    { name = "Ali Syed", email = "ali89syed@gmail.com" }
+    { name = "Ali Syed", email = "38336893+ali89syed@users.noreply.github.com" }
 ]
 requires-python = ">=3.12"
 dependencies = [
