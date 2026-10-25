@@ -13,7 +13,7 @@ text / mic (VAD -> Whisper STT)
         |  Send()    parallel fan-out
    +----+-----+
  menu_agent  order_agent     each runs its own tool-calling loop
- (RAG over   (regex ID extraction,
+ (RAG over   (checks for an ID;
   ChromaDB)   interrupt() asks for a missing ID)
    +----+-----+
         |

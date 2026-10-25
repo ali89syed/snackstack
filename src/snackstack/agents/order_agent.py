@@ -1,4 +1,4 @@
-"""Order agent: regex identifier extraction, HITL interrupt, then get_order_status."""
+"""Order agent: ask for an ID if the message has none (HITL), then get_order_status."""
 
 from typing import Literal
 
@@ -9,7 +9,7 @@ from snackstack.agents._loop import run_tool_loop
 from snackstack.agents.prompts import ORDER_AGENT_PROMPT
 from snackstack.logger import setup_logger
 from snackstack.state import StackState
-from snackstack.tools.order_tools import extract_identifier, get_order_status
+from snackstack.tools.order_tools import get_order_status, has_identifier
 
 logger = setup_logger(__name__)
 
@@ -19,18 +19,15 @@ ASK_FOR_ID = "I can help track your order! Please share your order ID (e.g. ORD-
 def order_agent_node(state: StackState) -> Command[Literal["synthesizer_node"]]:
     query = state["user_query"]
 
-    # The interrupt must come before any LLM call: on resume this node re-runs from the top.
-    identifier = extract_identifier(query)
-    if identifier is None:
+    # Ask before any LLM call: on resume, this node re-runs from the top.
+    if not has_identifier(query):
         reply = interrupt(ASK_FOR_ID)
-        identifier = extract_identifier(str(reply)) or str(reply).strip()
-        logger.info("Resumed with identifier %r", identifier)
+        query = f"{query}\nUser's reply: {reply}"
+        logger.info("Resumed with reply %r", reply)
 
+    # The LLM reads the message and passes the ID to get_order_status itself.
     answer = run_tool_loop(
-        [
-            SystemMessage(ORDER_AGENT_PROMPT),
-            HumanMessage(f"User message: {query}\nOrder identifier: {identifier}"),
-        ],
+        [SystemMessage(ORDER_AGENT_PROMPT), HumanMessage(query)],
         [get_order_status],
         agent_name="order_agent",
     )
