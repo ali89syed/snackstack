@@ -220,6 +220,9 @@ __marimo__/
 .streamlit/secrets.toml
 
 # --- SnackStack ---
+# Editor settings stay local
+.vscode/
+
 # Secrets: never commit real keys. Only the template is tracked.
 .env.*
 !.env.example
