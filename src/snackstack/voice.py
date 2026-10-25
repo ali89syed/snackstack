@@ -8,7 +8,6 @@ Try each boundary on its own:  uv run snackstack-voice --help
 
 import argparse
 import io
-import re
 import time
 import wave
 
@@ -141,24 +140,60 @@ def listen(threshold=0.025, silence_ms=700) -> str:
 
 # --- TTS ------------------------------------------------------------------------------
 
-def _spell(token: str) -> str:
+PUNCTUATION = ".,!?;:()\"'"
+
+
+def spell_id(word: str) -> str:
     """'SS201TRK' -> 'S S 2 0 1 T R K' so IDs are read character by character."""
-    return " ".join(c for c in token if c.isalnum())
+    return " ".join(c for c in word if c.isalnum())
 
 
-def _join_lines(match: re.Match) -> str:
-    # Turn a line break into a sentence pause unless the line already ends in punctuation.
-    return f"{match.group(1)} " if match.group(1) else ". "
+def is_order_or_tracking_id(word: str) -> bool:
+    word = word.upper()
+    return word.startswith("ORD-") or (word.startswith("SS") and word.endswith("TRK"))
+
+
+def remove_list_marker(line: str) -> str:
+    """'- item', '* item', '• item' or '1. item' -> 'item'."""
+    if line[:2] in ("- ", "* ", "• "):
+        return line[2:]
+    first, _, rest = line.partition(" ")
+    if first.endswith(".") and first[:-1].isdigit():
+        return rest
+    return line
+
+
+def spell_ids(line: str) -> str:
+    words = []
+    for word in line.split():
+        core = word.strip(PUNCTUATION)  # "SS201TRK)" -> "SS201TRK"
+        if is_order_or_tracking_id(core):
+            word = word.replace(core, spell_id(core))
+        words.append(word)
+    return " ".join(words)
 
 
 def normalize_for_speech(text: str) -> str:
     """Turn chat-formatted text into something that sounds right when spoken."""
-    text = re.sub(r"\*\*|__|`|#+\s*", "", text)                     # markdown emphasis/headings
-    text = re.sub(r"^\s*(?:[-*•]|\d+\.)\s+", "", text, flags=re.M)  # list bullets/numbers
-    text = re.sub(r"\bRs\.?\s?(\d+)", r"\1 rupees", text)            # "Rs 299" -> "299 rupees"
-    text = re.sub(r"\b(?:ORD-\d+|SS\d+TRK)\b", lambda m: _spell(m.group(0)), text)
-    text = re.sub(r"([.:!?;,])?[ \t]*\n\s*", _join_lines, text)
-    return text.strip()
+    # Markdown symbols would be read out loud.
+    for symbol in ("**", "__", "`", "#"):
+        text = text.replace(symbol, "")
+    # "Rs 299" sounds like "R S 299"; "rupees 299" is how it's said in India.
+    text = text.replace("Rs. ", "rupees ").replace("Rs ", "rupees ")
+
+    spoken = ""
+    for line in text.splitlines():
+        line = line.strip()
+        if not line:
+            continue
+        line = spell_ids(remove_list_marker(line))
+        if not spoken:
+            spoken = line
+        elif spoken.endswith((".", ",", "!", "?", ":", ";")):
+            spoken += " " + line
+        else:
+            spoken += ". " + line  # a line break becomes a short pause
+    return spoken
 
 
 def _tts_args(text: str, response_format: str) -> dict:

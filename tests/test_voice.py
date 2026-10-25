@@ -48,7 +48,4 @@ def test_normalize_for_speech():
     text = "Here you go:\n\n1. **Paneer Tikka** - Rs 199\n- Order ORD-201 (tracking SS201TRK)"
     spoken = normalize_for_speech(text)
     assert "**" not in spoken and "Rs" not in spoken
-    assert "199 rupees" in spoken
-    assert "Order O R D 2 0 1" in spoken
-    assert "S S 2 0 1 T R K" in spoken
-    assert spoken.startswith("Here you go: Paneer Tikka - 199 rupees. Order")
+    assert spoken == "Here you go: Paneer Tikka - rupees 199. Order O R D 2 0 1 (tracking S S 2 0 1 T R K)"

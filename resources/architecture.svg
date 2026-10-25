@@ -55,7 +55,7 @@
     <!-- Order lane -->
     <rect x="710" y="380" width="240" height="60" rx="12" fill="#33393F" stroke="#5E9A95" stroke-width="2"/>
     <text x="830" y="406" font-size="17" font-weight="700" fill="#ECEAE5" text-anchor="middle">Order Agent</text>
-    <text x="830" y="427" font-size="12" fill="#9CA3AB" text-anchor="middle">regex ID extraction</text>
+    <text x="830" y="427" font-size="12" fill="#9CA3AB" text-anchor="middle">checks for an ID</text>
     <path d="M830 440 V465" fill="none" stroke="#9CA3AB" stroke-width="1.5" marker-end="url(#arrow)"/>
     <polygon points="830,465 905,500 830,535 755,500" fill="#2B3035" stroke="#9CA3AB" stroke-width="1.5"/>
     <text x="830" y="504" font-size="12" fill="#ECEAE5" text-anchor="middle">ID in message?</text>
