@@ -2,7 +2,7 @@
 
 A voice-enabled, multi-agent food delivery assistant built with **LangGraph**. You can ask about the menu, track an order, or both in one sentence, by typing or by talking.
 
-![SnackStack architecture](docs/architecture.svg)
+![SnackStack architecture](resources/architecture.svg)
 
 ## How it works
 
